@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Register</title>
+</head>
+<body>
+
+  <h2>User Registration</h2>
+
+  <form id="regForm">
+    <div>
+      <label>Name:<br>
+        <input type="text" id="name" required>
+      </label>
+    </div>
+    <div>
+      <label>Email:<br>
+        <input type="email" id="email" required>
+      </label>
+    </div>
+    <div>
+      <label>Password:<br>
+        <input type="password" id="password" required>
+      </label>
+    </div>
+    <div style="margin-top:10px">
+      <button type="submit">Register</button>
+    </div>
+  </form>
+
+  <script>
+    // Simple registration: save to localStorage and POST via fetch,
+    // then redirect to userlist.html
+
+    document.getElementById('regForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // collect values
+      const user = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value // real apps: do NOT store plain passwords
+      };
+
+      // get existing users (or empty array)
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+      // add new user and save locally
+      users.push(user);
+      localStorage.setItem('users', JSON.stringify(users));
+
+      // send AJAX POST to demo endpoint (jsonplaceholder). In real app use your API.
+      fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify(user)
+      })
+      .then(response => response.json())
+      .then(data => {
+        // POST succeeded (demo response)
+        console.log('POST response:', data);
+        // redirect to list page
+        window.location.href = 'userlist.html';
+      })
+      .catch(err => {
+        // if POST fails, we already saved locally; still redirect
+        console.error('POST error:', err);
+        window.location.href = 'userlist.html';
+      });
+    });
+  </script>
+</body>
+</html>

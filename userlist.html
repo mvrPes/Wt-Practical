@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>User List</title>
+</head>
+<body>
+
+  <h2>Registered Users</h2>
+
+  <div>
+    <button id="refreshBtn">Refresh</button>
+    <button id="clearBtn">Clear All</button>
+    <a href="register.html" style="margin-left:10px">Go to Register</a>
+  </div>
+
+  <table id="usersTable" border="1" cellpadding="6" cellspacing="0" style="margin-top:10px; border-collapse:collapse;">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <!-- Don't display passwords in real apps; included here only because you stored them -->
+        <th>Password</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- rows inserted by script -->
+    </tbody>
+  </table>
+
+  <script>
+    function loadUsers() {
+      const tbody = document.querySelector('#usersTable tbody');
+      tbody.innerHTML = ''; // clear
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+      if (users.length === 0) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 4;
+        td.textContent = 'No users registered.';
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        return;
+      }
+
+      users.forEach((u, i) => {
+        const tr = document.createElement('tr');
+
+        const tdIndex = document.createElement('td');
+        tdIndex.textContent = i + 1;
+        tr.appendChild(tdIndex);
+
+        const tdName = document.createElement('td');
+        tdName.textContent = u.name || '';
+        tr.appendChild(tdName);
+
+        const tdEmail = document.createElement('td');
+        tdEmail.textContent = u.email || '';
+        tr.appendChild(tdEmail);
+
+        const tdPassword = document.createElement('td');
+        tdPassword.textContent = u.password || '';
+        tr.appendChild(tdPassword);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', loadUsers);
+
+    document.getElementById('clearBtn').addEventListener('click', function () {
+      if (confirm('Clear all users from localStorage?')) {
+        localStorage.removeItem('users');
+        loadUsers();
+      }
+    });
+
+    // load on page open
+    loadUsers();
+  </script>
+
+</body>
+</html>
