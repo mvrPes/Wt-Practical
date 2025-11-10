@@ -1,0 +1,18 @@
+<!-- Jquery Mobile -->
+<html>
+    <head>
+        <title>JQuery Mobile </title>
+        
+      <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script 	src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  </head> 
+    <body>
+        <h3>Web Technology Practical 5</h3>
+        <p> Hello, Welcome To Web Technology Practical 5 Jquery Mobile Simple view</p>
+
+        <h6>Copy Rights! Manas Raundal</h6>
+        
+    </body>
+</html>
+
